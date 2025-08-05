@@ -4,7 +4,10 @@ const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 const cors = require("cors");
-app.use(cors());
+app.use(cors({
+  origin: 'https://your-frontend-domain.com'
+}));
+
 
 
 
