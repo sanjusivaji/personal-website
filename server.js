@@ -1,24 +1,20 @@
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 const cors = require("cors");
+
+const app = express();  // <-- initialize app first
+
 app.use(cors({
-  origin: 'https://your-frontend-domain.com'
+  origin: 'https://your-frontend-domain.com'  // Replace with your frontend domain or use '*' for all
 }));
 
-
-
-
-const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-
 
 app.get("/", (req, res) => {
     res.send("Server is running");
