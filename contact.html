@@ -42,8 +42,8 @@
                                         <nav>
                                             <ul id="navigation">
                                                 <li><a href="index.html">home</a></li>
-                                                <li><a href="works.html">Works</a></li>
-                                                <li><a href="services.html">Services</a></li>
+                                                <li><a href="Works.html">Works</a></li>
+                                                <li><a href="Services.html">Services</a></li>
                                                 <li><a href="elements.html">Elements</a></li>
                                                 <li><a href="about.html">about</a></li>
                                                 <li><a href="single-blog.html">blog </a>
@@ -88,51 +88,59 @@
 
   <!-- Session for email sending               -->
   <section class="contact-section section_padding">
-          <div class="container">
-
-              <div class="row">
-                <div class="col-12">
-                  <h2 class="contact-title">Get in Touch</h2>
+    <div class="container">
+  
+      <div class="row">
+        <div class="col-12">
+          <h2 class="contact-title">Get in Touch</h2>
+        </div>
+  
+        <div class="col-lg-8">
+          <!-- EmailJS-compatible form -->
+          <form class="form-contact contact_form" id="contact-form">
+            <div class="row">
+              <!-- Message -->
+              <div class="col-12">
+                <div class="form-group">
+                  <textarea class="form-control w-100" id="message" name="message" cols="30" rows="9" placeholder="Enter Message" required></textarea>
                 </div>
-                <div class="col-lg-8">
-                 <form class="form-contact contact_form" action="contact_process.php" method="POST">
-
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="form-group">
-                          <textarea class="form-control w-100" name="message" cols="30" rows="9" placeholder="Enter Message" required></textarea>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <input class="form-control" name="name" type="text" placeholder="Enter your name" required/>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <input class="form-control" name="email" type="email"   placeholder="Enter email address"  oninvalid="this.setCustomValidity('Please enter a valid email')"    oninput="this.setCustomValidity('')"   required/>                  
-                        
-                        </div>
-                        <!-- pattern="^[\w.%+-]+@gmail\.com$" -->
-                      </div>
-                      <div class="col-12">
-                        <div class="form-group">
-                          <input class="form-control" name="subject" type="text" placeholder="Enter Subject" required />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group mt-3">
-                      <button type="submit" class="btn btn-outline-dark btn-lg px-4 py-2 fw-bold rounded-0" style="border: 1px solid #d3a75f;">
-                        SEND MESSAGE
-                      </button>
-                    </div>
-                  </form>
-
+              </div>
+  
+              <!-- Name -->
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input class="form-control" id="from_name" name="from_name" type="text" placeholder="Enter your name" required>
+                </div>
+              </div>
+  
+              <!-- Email -->
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <input class="form-control" id="email_id" name="email_id" type="email" placeholder="Enter email address" required>
+                </div>
+              </div>
+  
+              <!-- Subject -->
+              <div class="col-12">
+                <div class="form-group">
+                  <input class="form-control" id="subject" name="subject" type="text" placeholder="Enter Subject" required>
                 </div>
               </div>
             </div>
-
-    </section>
+  
+            <!-- Submit Button -->
+            <div class="form-group mt-3">
+              <button type="submit" class="btn btn-outline-dark btn-lg px-4 py-2 fw-bold rounded-0" style="border: 1px solid #d3a75f;">
+                SEND MESSAGE
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+  
+    </div>
+  </section>
+  
 
 
         <div class="col-lg-4">
@@ -232,6 +240,59 @@
 
   <script src="js/main.js"></script>
 
+
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+      // Initialize EmailJS
+      emailjs.init("g5k-KiHrvmnQCyva1");
+    
+      // Form submit listener
+      document.getElementById("contact-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+    
+        // Get field values
+        const name = document.getElementById("from_name").value.trim();
+        const email = document.getElementById("email_id").value.trim();
+        const subject = document.getElementById("subject").value.trim();
+        const message = document.getElementById("message").value.trim();
+    
+        // Email RegEx
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$/;
+    
+        // Validations
+        if (name === "") {
+          alert(" Name cannot be empty.");
+          return;
+        }
+    
+        if (!emailRegex.test(email)) {
+          alert(" Please enter a valid email address.");
+          return;
+        }
+    
+        if (subject === "") {
+          alert(" Subject cannot be empty.");
+          return;
+        }
+    
+        if (message === "") {
+          alert(" Message cannot be empty.");
+          return;
+        }
+    
+        //  If all valid, send with EmailJS
+        emailjs.sendForm("service_mbcgluh", "template_z1ifpal", this)
+          .then(() => {
+            alert(" Message sent successfully!");
+            document.getElementById("contact-form").reset();
+          }, (error) => {
+            alert(" Failed to send message.");
+            console.error("EmailJS Error:", error);
+          });
+      });
+    </script>
 
 </body>
 
